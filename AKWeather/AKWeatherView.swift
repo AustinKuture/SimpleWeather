@@ -11,7 +11,7 @@ import UIKit
 
 //属性参数
 let fontLarge = FONT_S(SCREEN_WIDTH * 0.2)
-let fontLittle = FONT_S(20)
+let fontLittle = FONT_S(17)
 
 let picCenter = (SCREEN_WIDTH + SCREEN_WIDTH * 0.4 + 65) * 0.5
 
@@ -23,11 +23,11 @@ class AKWeatherView: UIView {
     //weatherState
     public lazy var weatherState = UILabel()
     //pm2.5
-    public lazy var currentPM = UILabel()
+    public lazy var currentPM = UIButton()
     //wind
     public lazy var weatherWind = UILabel()
     //tempretureScope
-    public lazy var tempretureScope = UILabel()
+    public lazy var tempretureScope = UIButton()
     
     //白天图片
     public lazy var dayPicImg = UIImageView()
@@ -60,6 +60,7 @@ class AKWeatherView: UIView {
         //天气状况
         weatherState.font = fontLittle
         weatherState.textAlignment = ALIG_CENTER
+        weatherState.numberOfLines = 0;
         weatherState.backgroundColor = COLORS_RANDOM(0.5)
         
         self.addSubview(weatherState)
@@ -71,8 +72,10 @@ class AKWeatherView: UIView {
         }
         
         //PM2.5
-        currentPM.font = fontLittle
-        currentPM.textAlignment = ALIG_CENTER
+        currentPM.titleLabel?.font = FONT_S(12)
+        currentPM.titleLabel?.textAlignment = ALIG_CENTER
+        currentPM.titleLabel?.numberOfLines = 0
+        currentPM.setImage(UIImage(named: "pm25_"), for: UIControlState.normal)
         currentPM.backgroundColor = COLORS_RANDOM(0.5)
         
         self.addSubview(currentPM)
@@ -84,7 +87,7 @@ class AKWeatherView: UIView {
         }
         
         //风向
-        weatherWind.font = fontLittle
+        weatherWind.font = FONT_S(12)
         weatherWind.textAlignment = ALIG_CENTER
         weatherWind.backgroundColor = COLORS_RANDOM(0.5)
         
@@ -98,8 +101,9 @@ class AKWeatherView: UIView {
         }
         
         //温度范围
-        tempretureScope.font = fontLittle
-        tempretureScope.textAlignment = ALIG_CENTER
+        tempretureScope.titleLabel?.font = fontLittle
+        tempretureScope.titleLabel?.textAlignment = ALIG_CENTER
+        tempretureScope.setImage(UIImage(named:"weather_tm"), for: UIControlState.normal)
         tempretureScope.backgroundColor = COLORS_RANDOM(0.5)
         
         self.addSubview(tempretureScope)
@@ -114,7 +118,6 @@ class AKWeatherView: UIView {
         //白天图片
         dayPicImg.layer.cornerRadius = 25
         dayPicImg.layer.masksToBounds = true
-//        dayPicImg.backgroundColor = COLORS_RANDOM(1)
         
         self.addSubview(dayPicImg)
         dayPicImg.snp.makeConstraints { (make) in
@@ -127,7 +130,6 @@ class AKWeatherView: UIView {
         //晚上图片
         nightPicImg.layer.cornerRadius = 25
         nightPicImg.layer.masksToBounds = true
-//        nightPicImg.backgroundColor = COLORS_RANDOM(1)
         
         self.addSubview(nightPicImg)
         nightPicImg.snp.makeConstraints { (make) in

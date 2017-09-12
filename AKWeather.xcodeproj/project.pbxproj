@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		215CC1D4D0C1FB0EB2A8B98C /* Pods_AKWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E15A7B68E0BC1736B644D6 /* Pods_AKWeather.framework */; };
+		D79109B81F677F1D00FB90E5 /* AKFutureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79109B71F677F1D00FB90E5 /* AKFutureCell.swift */; };
 		D79783A91F6131D6004FADD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79783A81F6131D6004FADD6 /* AppDelegate.swift */; };
 		D79783AB1F6131D6004FADD6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79783AA1F6131D6004FADD6 /* ViewController.swift */; };
 		D79783AE1F6131D6004FADD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D79783AC1F6131D6004FADD6 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 		5BF74800402FECA5100874F8 /* Pods-AKWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKWeather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKWeather/Pods-AKWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		670D00272F6C322BBCB21ADA /* Pods-AKWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKWeather.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKWeather/Pods-AKWeather.release.xcconfig"; sourceTree = "<group>"; };
 		71E15A7B68E0BC1736B644D6 /* Pods_AKWeather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AKWeather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D79109B71F677F1D00FB90E5 /* AKFutureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKFutureCell.swift; sourceTree = "<group>"; };
 		D79783A51F6131D6004FADD6 /* AKWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D79783A81F6131D6004FADD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D79783AA1F6131D6004FADD6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B203901F623B24005BD7D0 /* AKWeatherView.swift */,
+				D79109B71F677F1D00FB90E5 /* AKFutureCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				D79783B11F6131D6004FADD6 /* AKWeather.xcdatamodeld in Sources */,
 				D79783AB1F6131D6004FADD6 /* ViewController.swift in Sources */,
 				D79783A91F6131D6004FADD6 /* AppDelegate.swift in Sources */,
+				D79109B81F677F1D00FB90E5 /* AKFutureCell.swift in Sources */,
 				D7B203911F623B24005BD7D0 /* AKWeatherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

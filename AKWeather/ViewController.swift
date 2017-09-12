@@ -13,14 +13,11 @@ import SnapKit
 import Kingfisher
 
 
-class ViewController: UIViewController {
+let CELL_WIDTH = SCREEN_WIDTH * 0.48
+let CELL_LINE = SCREEN_WIDTH * 0.02
 
-    //滑动视图
-    fileprivate lazy var scrollView = UIScrollView()
-    
-    //天气视图
-    var weatherView = AKWeatherView()
-    
+class ViewController: UIViewController,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource {
+
     //MARK:数据
     //currentTempreture
     fileprivate lazy var currentTPArray = [String]()
@@ -38,15 +35,46 @@ class ViewController: UIViewController {
     //nightURL
     fileprivate lazy var nightPicUrlArray = [String]()
     
+    //滑动视图
+    fileprivate lazy var scrollView = UIScrollView()
+    
+    //天气视图
+    var weatherView = AKWeatherView()
+    
+    //未来几天天气
+    fileprivate var collectionView:UICollectionView {
+        
+        let flowlayout = UICollectionViewFlowLayout()
+        flowlayout.itemSize = CGSize(width: CELL_WIDTH, height: CELL_WIDTH)
+        flowlayout.minimumLineSpacing = CELL_LINE
+        flowlayout.minimumInteritemSpacing = CELL_LINE - 7
+        
+        
+        let rect = CGRect(x: 0, y: SCREEN_WIDTH * 0.4 + 114, width: SCREEN_WIDTH, height: CELL_WIDTH * 2)
+        let collectionView = UICollectionView(frame: rect, collectionViewLayout: flowlayout)
+        
+        collectionView.backgroundColor = UIColor.white
+        collectionView.isScrollEnabled = false
+        collectionView.contentInset = UIEdgeInsetsMake(5, 3, 5, 3)
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellID")
+        
+        return collectionView
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        //天气布局
-        setupWeatherView()
-        
         //获取天气数据
         setupWeatherDataFromNetWork()
+        
+        //天气布局
+        setupWeatherView()
       
     }
     
@@ -59,12 +87,11 @@ class ViewController: UIViewController {
         self.view.addSubview(scrollView)
         
         //天气视图
-        weatherView = AKWeatherView(frame: CGRect(x: 0, y: 100, width: SCREEN_WIDTH, height: SCREEN_WIDTH * 0.4 + 50))
+        weatherView = AKWeatherView(frame: CGRect(x: 0, y: 64, width: SCREEN_WIDTH, height: SCREEN_WIDTH * 0.4 + 50))
 
         weatherView.backgroundColor = UIColor.clear
         
         scrollView.addSubview(weatherView)
-        
     }
 }
 
@@ -109,17 +136,40 @@ extension ViewController{
             
             self.weatherView.currentTempreture.text = "25º"
             self.weatherView.weatherState.text = self.weatherStaArray.first
-            self.weatherView.currentPM.text = self.currentPMArray.first
+            self.weatherView.currentPM.setTitle(" ".appending(self.currentPMArray.first!), for: UIControlState.normal)
             self.weatherView.weatherWind.text = self.weathWDArray.first
-            self.weatherView.tempretureScope.text = self.TPScopeArray.first
+            self.weatherView.tempretureScope.setTitle(self.TPScopeArray.first, for: UIControlState.normal)
             
-            self.weatherView.dayPicImg.kf.setImage(with:URL(string: self.dayPicUrlArray.first!))
-            self.weatherView.nightPicImg.kf.setImage(with:URL(string: self.nightPicUrlArray.first!))
-            
-            print("======URL:\(String(describing: self.dayPicUrlArray.first))")
+//            self.weatherView.dayPicImg.kf.setImage(with:URL(string: self.dayPicUrlArray.first!))
+//            self.weatherView.nightPicImg.kf.setImage(with:URL(string: self.nightPicUrlArray.first!))
+
+            //未来天气
+            self.scrollView.addSubview(self.collectionView)
         }
-       
+    }
+}
+
+//MARK:CollectionView
+extension ViewController{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        print("========TPCount:\(self.currentTPArray.count)")
+        
+        return self.currentTPArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath)
+        
+        cell.backgroundColor = COLORS_RANDOM(0.5)
+        cell.layer.cornerRadius = 5
+        cell.layer.shadowColor = UIColor.gray.cgColor
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
+        return cell
     }
 }
 
