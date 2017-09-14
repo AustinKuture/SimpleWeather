@@ -10,7 +10,7 @@ import UIKit
 
 
 //属性参数
-let fontLarge = FONT_S(SCREEN_WIDTH * 0.2)
+let fontLarge = FONT_S(30)
 let fontLittle = FONT_S(17)
 
 let picCenter = (SCREEN_WIDTH + SCREEN_WIDTH * 0.4 + 65) * 0.5
@@ -25,7 +25,7 @@ class AKWeatherView: UIView {
     //pm2.5
     public lazy var currentPM = UIButton()
     //wind
-    public lazy var weatherWind = UILabel()
+    public lazy var weatherWind = UIButton()
     //tempretureScope
     public lazy var tempretureScope = UIButton()
     
@@ -46,6 +46,7 @@ class AKWeatherView: UIView {
         
         //当前温度
         currentTempreture.font = fontLarge
+        currentTempreture.numberOfLines = 0
         currentTempreture.textAlignment = ALIG_CENTER
         currentTempreture.backgroundColor = COLORS_RANDOM(0.5)
         
@@ -87,8 +88,9 @@ class AKWeatherView: UIView {
         }
         
         //风向
-        weatherWind.font = FONT_S(12)
-        weatherWind.textAlignment = ALIG_CENTER
+        weatherWind.titleLabel?.font = FONT_S(12)
+        weatherWind.titleLabel?.textAlignment = ALIG_CENTER
+        weatherWind.setImage(UIImage(named:"weather_wind"), for: UIControlState.normal)
         weatherWind.backgroundColor = COLORS_RANDOM(0.5)
         
         self.addSubview(weatherWind)

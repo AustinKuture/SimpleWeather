@@ -29,6 +29,8 @@ class ViewController: UIViewController,UICollectionViewDelegateFlowLayout,UIColl
     fileprivate lazy var weathWDArray = [String]()
     //tempretureScope
     fileprivate lazy var TPScopeArray = [String]()
+    //date
+    fileprivate lazy var dateSArray = [String]()
     
     //dayURL
     fileprivate lazy var dayPicUrlArray = [String]()
@@ -48,9 +50,8 @@ class ViewController: UIViewController,UICollectionViewDelegateFlowLayout,UIColl
         flowlayout.itemSize = CGSize(width: CELL_WIDTH, height: CELL_WIDTH)
         flowlayout.minimumLineSpacing = CELL_LINE
         flowlayout.minimumInteritemSpacing = CELL_LINE - 7
-        
-        
-        let rect = CGRect(x: 0, y: SCREEN_WIDTH * 0.4 + 114, width: SCREEN_WIDTH, height: CELL_WIDTH * 2)
+
+        let rect = CGRect(x: 0, y: SCREEN_WIDTH * 0.4 + 114, width: SCREEN_WIDTH, height: CELL_WIDTH * 2 + 15)
         let collectionView = UICollectionView(frame: rect, collectionViewLayout: flowlayout)
         
         collectionView.backgroundColor = UIColor.white
@@ -61,7 +62,7 @@ class ViewController: UIViewController,UICollectionViewDelegateFlowLayout,UIColl
         collectionView.dataSource = self
         
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellID")
+        collectionView.register(AKFutureCell.self, forCellWithReuseIdentifier: "cellID")
         
         return collectionView
     }
@@ -128,16 +129,18 @@ extension ViewController{
                 self.weathWDArray.append(json["results"][0]["weather_data"][i]["wind"].string ?? "")
                 //温度范围
                 self.TPScopeArray.append(json["results"][0]["weather_data"][i]["temperature"].string ?? "")
+                //当前日期
+                self.dateSArray.append(json["results"][0]["weather_data"][i]["date"].string ?? "")
                 //白天图片
                 self.dayPicUrlArray.append(json["results"][0]["weather_data"][i]["dayPictureUrl"].string ?? "")
                 //晚上图片
                 self.nightPicUrlArray.append(json["results"][0]["weather_data"][i]["nightPictureUrl"].string ?? "")
             }
             
-            self.weatherView.currentTempreture.text = "25º"
+            self.weatherView.currentTempreture.text = self.dateSArray.first
             self.weatherView.weatherState.text = self.weatherStaArray.first
             self.weatherView.currentPM.setTitle(" ".appending(self.currentPMArray.first!), for: UIControlState.normal)
-            self.weatherView.weatherWind.text = self.weathWDArray.first
+            self.weatherView.weatherWind.setTitle(self.weathWDArray.first, for: UIControlState.normal)
             self.weatherView.tempretureScope.setTitle(self.TPScopeArray.first, for: UIControlState.normal)
             
 //            self.weatherView.dayPicImg.kf.setImage(with:URL(string: self.dayPicUrlArray.first!))
@@ -145,6 +148,8 @@ extension ViewController{
 
             //未来天气
             self.scrollView.addSubview(self.collectionView)
+            self.collectionView.reloadData()
+
         }
     }
 }
@@ -161,15 +166,41 @@ extension ViewController{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as! AKFutureCell
         
-        cell.backgroundColor = COLORS_RANDOM(0.5)
+        cell.dateL.text = self.dateSArray[indexPath.row]
+        cell.weatherL.text = self.weatherStaArray[indexPath.row]
+        cell.picL.kf.setImage(with: URL(string: self.dayPicUrlArray[indexPath.row]))
+        cell.windL.setTitle(self.weathWDArray[indexPath.row], for: UIControlState.normal)
+        cell.tempreture.setTitle(self.TPScopeArray[indexPath.row], for: UIControlState.normal)
+
+        //效果
+        cell.backgroundColor = COLORS_RANDOM(0.2)
         cell.layer.cornerRadius = 5
         cell.layer.shadowColor = UIColor.gray.cgColor
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowOffset = CGSize(width: 5, height: 5)
         
+        //边框
+        cell.layer.borderColor = COLORS_RANDOM(0.3).cgColor
+        cell.layer.borderWidth = 1
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+
+//        UIView.beginAnimations("curlUp", context: nil)
+//        UIView.setAnimationCurve(UIViewAnimationCurve.easeInOut)
+//        UIView.setAnimationDuration(1)
+//        UIView.setAnimationDelegate(self)
+//        UIView.setAnimationTransition(UIViewAnimationTransition.curlUp, for: collectionView, cache: true)
+//        UIView.commitAnimations()
+        
+     
+        
+
     }
 }
 
